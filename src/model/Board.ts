@@ -1,18 +1,19 @@
 import { Cell } from './Cell'
+import { EColors } from './EColors'
 
 export class Board {
   cells: Cell[][] = []
 
+  constructor() {
+    this.initCells()
+  }
+
   public initCells() {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       const row: Cell[] = []
 
-      for (let j = 0; j < 8; j++) {
-        if ((i + j) % 2 !== 0) {
-          row.push(new Cell())
-        } else {
-          row.push(new Cell())
-        }
+      for (let j = 0; j < 10; j++) {
+        row.push(new Cell(i, j, EColors.WHITE))
       }
 
       this.cells.push(row)

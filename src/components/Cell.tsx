@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { FC } from 'react'
+import { Cell as CellClass } from '../model/Cell'
 
 const SCell = styled.div`
   width: 20px;
@@ -7,6 +9,12 @@ const SCell = styled.div`
   border: 1px solid grey;
 `
 
-export const Cell = () => {
+interface IProps {
+  cell: CellClass
+}
+
+export const Cell: FC<IProps> = ({ cell }) => {
+  console.log('class Cell', cell)
+
   return <SCell></SCell>
 }

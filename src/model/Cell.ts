@@ -1,7 +1,9 @@
-import { EColors } from './Colors'
+import { EColors } from './EColors'
 
 export class Cell {
-  readonly x: number
-  readonly y: number
-  readonly color: EColors
+  constructor(public x: number, public y: number, public color: EColors) {
+    this.x = x
+    this.y = y
+    this.color = color
+  }
 }
