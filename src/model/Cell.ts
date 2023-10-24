@@ -1,9 +1,19 @@
-import { EColors } from './EColors'
+import { EColors } from './enums/EColors'
+import { getNewID } from '../utils/getId'
 
 export class Cell {
-  constructor(public x: number, public y: number, public color: EColors) {
+  id: number
+
+  constructor(
+    public x: number,
+    public y: number,
+    public colorBackground: EColors.CELL_BACKGROUND,
+    public colorBorder: EColors.CELL_BORDER
+  ) {
+    this.id = getNewID.next().value as number
     this.x = x
     this.y = y
-    this.color = color
+    this.colorBackground = colorBackground
+    this.colorBorder = colorBorder
   }
 }

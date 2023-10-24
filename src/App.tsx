@@ -1,14 +1,5 @@
-import './App.css'
-
-import { Container } from './components/Container'
-import { Game } from './components/Game'
+import { GameComponent } from './components/GameComponent'
 
 export const App = () => {
-  return (
-    <Container>
-      <Game />
-    </Container>
-  )
+  return <GameComponent />
 }
-
-export default App
