@@ -7,7 +7,7 @@ export class Cell {
   constructor(
     public x: number,
     public y: number,
-    public colorBackground: EColors.CELL_BACKGROUND,
+    public colorBackground: EColors,
     public colorBorder: EColors.CELL_BORDER
   ) {
     this.id = getNewID.next().value as number
