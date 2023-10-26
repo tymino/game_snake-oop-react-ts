@@ -12,6 +12,13 @@ export class Grid {
     this.initSnake(snake)
   }
 
+  get getGridSize() {
+    return {
+      width: this.WIDTH,
+      height: this.HEIGHT,
+    }
+  }
+
   get getCells() {
     return this.cells
   }

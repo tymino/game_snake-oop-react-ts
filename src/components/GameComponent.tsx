@@ -18,15 +18,29 @@ const BoardContainer = styled.div`
 export const GameComponent = () => {
   const [snake] = useState(new Snake(0, 0))
   const [gameGrid, setGameGrid] = useState(new Grid(snake))
+  const [gridSize] = useState(gameGrid.getGridSize)
+  const [isRunGame] = useState(true)
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      snake.move()
-      setGameGrid(new Grid(snake))
-    }, 500)
+    const GAME_SPEED = 100
+    let countGameFrame = 0
 
-    return () => clearInterval(timer)
-  }, [snake])
+    const main = () => {
+      if (!isRunGame) return
+
+      if (countGameFrame > GAME_SPEED) {
+        snake.move(gridSize)
+
+        countGameFrame = 0
+        setGameGrid(new Grid(snake))
+      }
+
+      countGameFrame++
+      window.requestAnimationFrame(main)
+    }
+
+    main()
+  }, [snake, gridSize, isRunGame])
 
   // console.log('GameComponent', gameGrid)
 

@@ -13,7 +13,9 @@ export class Snake extends Segment {
     this.direction = EDirection.RIGHT
   }
 
-  move() {
+  move(gridSize: { width: number; height: number }) {
+    console.log('Snake move', gridSize)
+
     this.x += 1
   }
 }
