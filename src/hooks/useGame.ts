@@ -3,31 +3,33 @@ import { Grid } from '../model/Grid'
 import { Snake } from '../model/Snake/Snake'
 
 export const useGame = () => {
-  const [snake] = useState(new Snake(0, 0))
+  const [snake] = useState(new Snake())
   const [grid, setGameGrid] = useState(new Grid(snake))
-  const [gridSize] = useState(grid.getSize)
   const [isGameRun] = useState(true)
-  const [gameSpeed] = useState(100)
 
-  useEffect(() => {
-    let countGameFrame = 0
+  const gameLoop = () => {
+    let timer = -1
 
-    const main = () => {
+    timer = setInterval(() => {
       if (!isGameRun) return
 
-      if (countGameFrame > gameSpeed) {
-        snake.move(gridSize)
+      snake.move(grid.getSize)
+      setGameGrid(new Grid(snake))
+    }, 1000)
 
-        countGameFrame = 0
-        setGameGrid(new Grid(snake))
-      }
-
-      countGameFrame++
-      window.requestAnimationFrame(main)
+    const handleSetDirection = (e: KeyboardEvent) => {
+      snake.setDirection(e.key)
     }
 
-    main()
-  }, [snake, gridSize, isGameRun, gameSpeed])
+    document.addEventListener('keyup', handleSetDirection)
+
+    return () => {
+      document.removeEventListener('keyup', handleSetDirection)
+      clearInterval(timer)
+    }
+  }
+
+  useEffect(gameLoop, [snake, isGameRun, grid.getSize])
 
   const gridCells = grid.getCells
 
