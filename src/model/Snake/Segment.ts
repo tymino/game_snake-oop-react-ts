@@ -1,9 +1,14 @@
 export class Segment {
-  x: number
-  y: number
-
-  constructor(x: number, y: number) {
+  constructor(protected x: number, protected y: number) {
     this.x = x
     this.y = y
+  }
+
+  get getPosX() {
+    return this.x
+  }
+
+  get getPosY() {
+    return this.y
   }
 }

@@ -5,16 +5,22 @@ import { Snake } from '../model/Snake/Snake'
 export const useGame = () => {
   const [snake] = useState(new Snake())
   const [grid, setGameGrid] = useState(new Grid(snake))
-  const [isGameRun] = useState(true)
+  // const [isGameRun] = useState(true)
 
   const gameLoop = () => {
     let timer = -1
 
     timer = setInterval(() => {
-      if (!isGameRun) return
-
+      // if (!isGameRun) return
+      console.log('timer before')
       snake.move(grid.getSize)
-      setGameGrid(new Grid(snake))
+
+      // fix 2 render
+
+      const newGrid = new Grid(snake)
+      setGameGrid(newGrid)
+
+      console.log('timer after')
     }, 1000)
 
     const handleSetDirection = (e: KeyboardEvent) => {
@@ -29,7 +35,7 @@ export const useGame = () => {
     }
   }
 
-  useEffect(gameLoop, [snake, isGameRun, grid.getSize])
+  useEffect(gameLoop, [])
 
   const gridCells = grid.getCells
 

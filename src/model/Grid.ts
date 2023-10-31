@@ -8,8 +8,10 @@ export class Grid {
   private cells: Cell[][] = []
 
   constructor(snake: Snake) {
+    console.log('constructor Grid')
+
     this.initCells()
-    this.initSnake(snake)
+    // this.initSnake(snake)
   }
 
   get getSize() {
@@ -24,6 +26,8 @@ export class Grid {
   }
 
   public initCells() {
+    console.log('initCells')
+
     for (let i = 0; i < this.WIDTH; i++) {
       const row: Cell[] = []
 
@@ -35,26 +39,18 @@ export class Grid {
     }
   }
 
-  public initSnake(snake: Snake) {
-    this.cells[snake.y][snake.x] = new Cell(
-      snake.x,
-      snake.y,
+  public initSnake({ getPosX, getPosY, getBody }: Snake) {
+    this.cells[getPosY][getPosX] = new Cell(
+      getPosX,
+      getPosY,
       EColors.SNAKE_HEAD,
       EColors.CELL_BORDER
     )
 
-    // this.cells = this.cells.map((rowCells) => {
-    //   if (rowCells[0].x === this.snake?.x) {
-    //     return rowCells.map((cell) => {
-    //       if (cell.y === this.snake?.y) {
-    //         return new Cell(this.snake.x, this.snake.y, EColors.SNAKE_HEAD, EColors.CELL_BORDER)
-    //       }
-
-    //       return cell
-    //     })
-    //   }
-
-    //   return rowCells
-    // })
+    console.log('initSnake')
+    // for (let i = 0; i < getBody.length; i++) {
+    //   console.log('getBody', getBody[i])
+    //   console.log('test')
+    // }
   }
 }

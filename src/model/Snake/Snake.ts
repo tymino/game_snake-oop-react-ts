@@ -4,15 +4,19 @@ import { EColors, EDirection } from '../enums'
 
 export class Snake extends Segment {
   color: EColors.SNAKE_HEAD
-  dx: number
-  dy: number
-  body: Body[] = []
+  private dx: number
+  private dy: number
+  private body: Body[] = [new Body(0, 0)]
 
   constructor(x = 5, y = 4) {
     super(x, y)
     this.color = EColors.SNAKE_HEAD
     this.dx = 1
     this.dy = 0
+  }
+
+  get getBody() {
+    return this.body
   }
 
   setDirection(key: string) {
