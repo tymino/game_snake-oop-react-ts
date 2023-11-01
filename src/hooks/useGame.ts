@@ -1,26 +1,29 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Grid } from '../model/Grid'
 import { Snake } from '../model/Snake/Snake'
 
 export const useGame = () => {
-  const [snake] = useState(new Snake())
-  const [grid, setGameGrid] = useState(new Grid(snake))
   // const [isGameRun] = useState(true)
+  const [snake] = useState(new Snake())
+
+  const updateGame = useCallback(() => {
+    const newGrid = new Grid()
+    newGrid.initCells()
+    newGrid.initSnake(snake)
+
+    return newGrid
+  }, [snake])
+
+  const [grid, setGameGrid] = useState(updateGame)
 
   const gameLoop = () => {
     let timer = -1
 
     timer = setInterval(() => {
       // if (!isGameRun) return
-      console.log('timer before')
+
       snake.move(grid.getSize)
-
-      // fix 2 render
-
-      const newGrid = new Grid(snake)
-      setGameGrid(newGrid)
-
-      console.log('timer after')
+      setGameGrid(updateGame)
     }, 1000)
 
     const handleSetDirection = (e: KeyboardEvent) => {
@@ -35,7 +38,7 @@ export const useGame = () => {
     }
   }
 
-  useEffect(gameLoop, [])
+  useEffect(gameLoop, [grid.getSize, snake, updateGame])
 
   const gridCells = grid.getCells
 

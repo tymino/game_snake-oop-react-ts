@@ -7,13 +7,6 @@ export class Grid {
   private HEIGHT: number = 10
   private cells: Cell[][] = []
 
-  constructor(snake: Snake) {
-    console.log('constructor Grid')
-
-    this.initCells()
-    // this.initSnake(snake)
-  }
-
   get getSize() {
     return {
       width: this.WIDTH,
@@ -39,7 +32,7 @@ export class Grid {
     }
   }
 
-  public initSnake({ getPosX, getPosY, getBody }: Snake) {
+  public initSnake({ getPosX, getPosY }: Snake) {
     this.cells[getPosY][getPosX] = new Cell(
       getPosX,
       getPosY,
