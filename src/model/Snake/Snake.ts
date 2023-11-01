@@ -5,22 +5,24 @@ import { EDirection } from '../enums'
 export class Snake extends Block {
   private dx: number
   private dy: number
-  private body: Body[] = [
-    new Body(4, 4),
-    new Body(3, 4),
-    new Body(2, 4),
-    new Body(1, 4),
-    new Body(0, 4),
-  ]
+  private body: Body[] = []
 
   constructor(x = 5, y = 4) {
     super(x, y)
     this.dx = 1
     this.dy = 0
+
+    this.createBody()
   }
 
   get getBody() {
     return this.body
+  }
+
+  createBody(segments = 5) {
+    for (let i = 1; i <= segments; i++) {
+      this.body.push(new Body(this.x - i, 4))
+    }
   }
 
   setDirection(key: string) {
