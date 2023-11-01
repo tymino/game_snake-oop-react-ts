@@ -1,8 +1,8 @@
-import { Segment } from './Segment'
+import { Block } from '../Block'
 import { Body } from './Body'
 import { EColors, EDirection } from '../enums'
 
-export class Snake extends Segment {
+export class Snake extends Block {
   color: EColors.SNAKE_HEAD
   private dx: number
   private dy: number
@@ -46,7 +46,7 @@ export class Snake extends Segment {
     }
   }
 
-  move({ width, height }: { width: number; height: number }) {
+  move([width, height]: number[]) {
     this.x += this.dx
     this.y += this.dy
 

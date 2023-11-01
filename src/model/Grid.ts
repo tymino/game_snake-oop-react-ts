@@ -8,10 +8,7 @@ export class Grid {
   private cells: Cell[][] = []
 
   get getSize() {
-    return {
-      width: this.WIDTH,
-      height: this.HEIGHT,
-    }
+    return [this.WIDTH, this.HEIGHT]
   }
 
   get getCells() {
@@ -19,8 +16,6 @@ export class Grid {
   }
 
   public initCells() {
-    console.log('initCells')
-
     for (let i = 0; i < this.WIDTH; i++) {
       const row: Cell[] = []
 
@@ -32,18 +27,11 @@ export class Grid {
     }
   }
 
-  public initSnake({ getPosX, getPosY }: Snake) {
-    this.cells[getPosY][getPosX] = new Cell(
-      getPosX,
-      getPosY,
-      EColors.SNAKE_HEAD,
-      EColors.CELL_BORDER
-    )
+  public initSnake({ getPosition: [x, y], getBody }: Snake) {
+    this.cells[y][x] = new Cell(x, y, EColors.SNAKE_HEAD, EColors.CELL_BORDER)
 
-    console.log('initSnake')
-    // for (let i = 0; i < getBody.length; i++) {
-    //   console.log('getBody', getBody[i])
-    //   console.log('test')
-    // }
+    for (let i = 0; i < getBody.length; i++) {
+      console.log('getBody', getBody[i])
+    }
   }
 }

@@ -4,6 +4,7 @@ import { Snake } from '../model/Snake/Snake'
 
 export const useGame = () => {
   // const [isGameRun] = useState(true)
+  const [gameSpeed] = useState(200)
   const [snake] = useState(new Snake())
 
   const updateGame = useCallback(() => {
@@ -24,7 +25,7 @@ export const useGame = () => {
 
       snake.move(grid.getSize)
       setGameGrid(updateGame)
-    }, 1000)
+    }, gameSpeed)
 
     const handleSetDirection = (e: KeyboardEvent) => {
       snake.setDirection(e.key)
@@ -38,7 +39,7 @@ export const useGame = () => {
     }
   }
 
-  useEffect(gameLoop, [grid.getSize, snake, updateGame])
+  useEffect(gameLoop, [gameSpeed, grid.getSize, snake, updateGame])
 
   const gridCells = grid.getCells
 

@@ -1,7 +1,7 @@
-import { Segment } from './Segment'
+import { Block } from '../Block'
 import { EColors } from '../enums/EColors'
 
-export class Body extends Segment {
+export class Body extends Block {
   color: EColors.SNAKE_BODY
 
   constructor(x: number, y: number) {
