@@ -1,16 +1,20 @@
 import { Block } from '../Block'
 import { Body } from './Body'
-import { EColors, EDirection } from '../enums'
+import { EDirection } from '../enums'
 
 export class Snake extends Block {
-  color: EColors.SNAKE_HEAD
   private dx: number
   private dy: number
-  private body: Body[] = [new Body(0, 0)]
+  private body: Body[] = [
+    new Body(4, 4),
+    new Body(3, 4),
+    new Body(2, 4),
+    new Body(1, 4),
+    new Body(0, 4),
+  ]
 
   constructor(x = 5, y = 4) {
     super(x, y)
-    this.color = EColors.SNAKE_HEAD
     this.dx = 1
     this.dy = 0
   }
@@ -47,6 +51,9 @@ export class Snake extends Block {
   }
 
   move([width, height]: number[]) {
+    const newBodySegmentPosX = this.x
+    const newBodySegmentPosY = this.y
+
     this.x += this.dx
     this.y += this.dy
 
@@ -63,5 +70,8 @@ export class Snake extends Block {
     if (this.y >= height) {
       this.y = 0
     }
+
+    this.body.unshift(new Body(newBodySegmentPosX, newBodySegmentPosY))
+    this.body.pop()
   }
 }

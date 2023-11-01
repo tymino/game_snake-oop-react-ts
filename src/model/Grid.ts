@@ -27,11 +27,25 @@ export class Grid {
     }
   }
 
-  public initSnake({ getPosition: [x, y], getBody }: Snake) {
-    this.cells[y][x] = new Cell(x, y, EColors.SNAKE_HEAD, EColors.CELL_BORDER)
+  public initSnake({ getPosition: [snakePosX, snakePosY], getBody }: Snake) {
+    // init Head segment
+    this.cells[snakePosY][snakePosX] = new Cell(
+      snakePosX,
+      snakePosY,
+      EColors.SNAKE_HEAD,
+      EColors.CELL_BORDER
+    )
 
+    // init Body segments
     for (let i = 0; i < getBody.length; i++) {
-      console.log('getBody', getBody[i])
+      const [bodyPosX, bodyPosY] = getBody[i].getPosition
+
+      this.cells[bodyPosY][bodyPosX] = new Cell(
+        bodyPosX,
+        bodyPosY,
+        EColors.SNAKE_BODY,
+        EColors.CELL_BORDER
+      )
     }
   }
 }

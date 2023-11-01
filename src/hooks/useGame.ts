@@ -3,7 +3,7 @@ import { Grid } from '../model/Grid'
 import { Snake } from '../model/Snake/Snake'
 
 export const useGame = () => {
-  // const [isGameRun] = useState(true)
+  const [isGameRun, setIsGameRun] = useState(true)
   const [gameSpeed] = useState(200)
   const [snake] = useState(new Snake())
 
@@ -21,7 +21,7 @@ export const useGame = () => {
     let timer = -1
 
     timer = setInterval(() => {
-      // if (!isGameRun) return
+      if (!isGameRun) return
 
       snake.move(grid.getSize)
       setGameGrid(updateGame)
@@ -39,9 +39,12 @@ export const useGame = () => {
     }
   }
 
-  useEffect(gameLoop, [gameSpeed, grid.getSize, snake, updateGame])
+  useEffect(gameLoop, [gameSpeed, grid.getSize, isGameRun, snake, updateGame])
 
   const gridCells = grid.getCells
 
-  return [gridCells]
+  return {
+    gridCells,
+    setIsGameRun,
+  }
 }
