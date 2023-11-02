@@ -5,6 +5,7 @@ import { EDirection, ESizeGridAndCell } from '../enums'
 export class Snake extends Block {
   private dx: number
   private dy: number
+  private isGrow = false
   private body: Body[] = []
 
   constructor(
@@ -18,8 +19,16 @@ export class Snake extends Block {
     this.createBody()
   }
 
+  get getHeadPosition() {
+    return [this.x, this.y]
+  }
+
   get getBody() {
     return this.body
+  }
+
+  updateBodySize() {
+    this.isGrow = true
   }
 
   createBody(segments = 10) {
@@ -92,6 +101,11 @@ export class Snake extends Block {
     }
 
     this.body.unshift(new Body(newBodySegmentPosX, newBodySegmentPosY))
-    this.body.pop()
+
+    if (!this.isGrow) {
+      this.body.pop()
+    }
+
+    this.isGrow = false
   }
 }

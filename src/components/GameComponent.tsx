@@ -23,7 +23,7 @@ const ButtonStyle = styled.button`
 `
 
 export const GameComponent = () => {
-  const { gridCells, setIsGameRun } = useGame()
+  const { gridCells, gamePoint, setIsGameRun } = useGame()
   // console.log('GameComponent', gameGrid)
 
   const changeRunPauseGame = () => {
@@ -40,6 +40,7 @@ export const GameComponent = () => {
         )}
       </BoardContainer>
       <ButtonStyle onClick={changeRunPauseGame}>STOP/PLAY GAME</ButtonStyle>
+      <div>{gamePoint}</div>
     </GameContainer>
   )
 }
