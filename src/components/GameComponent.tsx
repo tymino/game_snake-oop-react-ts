@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { useGame } from '../hooks/useGame'
 import { CellComponent } from './CellComponent'
+import { ESizeGridAndCell } from '../model/enums/ESizeGridAndCell'
 
 const GameContainer = styled.div`
   display: flex;
@@ -11,8 +12,8 @@ const GameContainer = styled.div`
 `
 const BoardContainer = styled.div`
   display: grid;
-  grid-template-rows: repeat(10, 1fr);
-  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(${ESizeGridAndCell.GridDimension}, 1fr);
+  grid-template-columns: repeat(${ESizeGridAndCell.GridDimension}, 1fr);
 `
 
 const ButtonStyle = styled.button`

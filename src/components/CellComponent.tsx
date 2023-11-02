@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Cell } from '../model/Cell'
 import { EColors } from '../model/enums/EColors'
+import { ESizeGridAndCell } from '../model/enums/ESizeGridAndCell'
 
 interface ICellStyleProps {
   $colorBackground: EColors
@@ -8,8 +9,8 @@ interface ICellStyleProps {
 }
 
 const CellStyle = styled.div<ICellStyleProps>`
-  width: 64px;
-  height: 64px;
+  width: ${ESizeGridAndCell.CellSizeInPx}px;
+  height: ${ESizeGridAndCell.CellSizeInPx}px;
   background: ${({ $colorBackground }) => $colorBackground};
   border: 1px solid ${({ $colorBorder }) => $colorBorder};
 `

@@ -1,10 +1,10 @@
 import { Cell } from './Cell'
 import { Snake } from './Snake/Snake'
-import { EColors } from './enums/EColors'
+import { EColors, ESizeGridAndCell } from './enums'
 
 export class Grid {
-  private WIDTH: number = 10
-  private HEIGHT: number = 10
+  private WIDTH = ESizeGridAndCell.GridDimension
+  private HEIGHT = ESizeGridAndCell.GridDimension
   private cells: Cell[][] = []
 
   get getSize() {

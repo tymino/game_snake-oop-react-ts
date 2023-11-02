@@ -1,13 +1,16 @@
 import { Block } from '../Block'
 import { Body } from './Body'
-import { EDirection } from '../enums'
+import { EDirection, ESizeGridAndCell } from '../enums'
 
 export class Snake extends Block {
   private dx: number
   private dy: number
   private body: Body[] = []
 
-  constructor(x = 5, y = 4) {
+  constructor(
+    x = Math.floor(ESizeGridAndCell.GridDimension / 2),
+    y = Math.floor(ESizeGridAndCell.GridDimension / 2)
+  ) {
     super(x, y)
     this.dx = 1
     this.dy = 0
@@ -19,9 +22,9 @@ export class Snake extends Block {
     return this.body
   }
 
-  createBody(segments = 5) {
+  createBody(segments = 10) {
     for (let i = 1; i <= segments; i++) {
-      this.body.push(new Body(this.x - i, 4))
+      this.body.push(new Body(this.x - i, this.y))
     }
   }
 
