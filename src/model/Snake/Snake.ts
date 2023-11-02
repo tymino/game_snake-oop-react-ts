@@ -55,12 +55,27 @@ export class Snake extends Block {
     }
   }
 
+  checkCollisionBody() {
+    for (let i = 0; i < this.body.length; i++) {
+      const segment = this.body[i]
+      const [segmentX, segmentY] = segment.getPosition
+
+      if (segmentX === this.x && segmentY === this.y) {
+        const newBody = this.body.slice(0, i + 1)
+
+        this.body = newBody
+      }
+    }
+  }
+
   move([width, height]: number[]) {
     const newBodySegmentPosX = this.x
     const newBodySegmentPosY = this.y
 
     this.x += this.dx
     this.y += this.dy
+
+    this.checkCollisionBody()
 
     if (this.x < 0) {
       this.x = width - 1
