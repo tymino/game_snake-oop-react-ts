@@ -3,10 +3,8 @@ import { Snake } from './Snake/Snake'
 import { ESizeGridAndCell } from './enums'
 
 export class Apple extends Block {
-  x = -1
-  y = -1
-  constructor() {
-    super(x, this.y)
+  constructor(x = -1, y = -1) {
+    super(x, y)
   }
 
   setNewPosition(snake: Snake, gridSize: ESizeGridAndCell[]) {

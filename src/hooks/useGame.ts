@@ -21,7 +21,7 @@ export const useGame = () => {
 
   /*
   ////////
-  send Snake, Apple in Grid
+  Удалить ооп
   ////////
   */
 
