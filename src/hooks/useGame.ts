@@ -2,46 +2,59 @@ import { useState, useEffect, useCallback } from 'react'
 import { Grid } from '../model/Grid'
 import { Snake } from '../model/Snake/Snake'
 import { Apple } from '../model/Apple'
+import { ESizeGridAndCell } from '../model/enums'
+import { randomInt } from '../utils/randomInt'
 
 export const useGame = () => {
-  const [isGameRun, setIsGameRun] = useState(true)
   const [gameSpeed] = useState(200)
-  const [gamePoint, setGamePoint] = useState(0)
+  const [gamePoint] = useState(0)
+  const [isGameRun, setIsGameRun] = useState(true)
   const [snake] = useState(new Snake())
-  const [apple] = useState(new Apple())
 
-  const updateGameGrid = useCallback(() => {
-    const newGrid = new Grid()
-    newGrid.initCells()
-    newGrid.initSnake(snake)
-    newGrid.initApple(apple.getPosition)
+  const createNewApple = () => {
+    const appleX = randomInt(ESizeGridAndCell.GridDimension)
+    const appleY = randomInt(ESizeGridAndCell.GridDimension)
 
-    return newGrid
-  }, [apple.getPosition, snake])
+    console.log('apple', appleX, appleY)
 
-  /*
-  ////////
-  Удалить ооп
-  ////////
-  */
+    return [appleX, appleY]
+  }
+
+  const [apple, setApple] = useState(() => {
+    console.log('tick')
+    return new Apple(createNewApple())
+  })
+  const updateGameGrid = useCallback(() => new Grid(snake, apple), [snake, apple])
 
   const [grid, setGameGrid] = useState(updateGameGrid)
 
-  const gameLoop = () => {
+  const checkCollisionSnakeAndApple = () => {
+    const [appleX, appleY] = apple.getPosition
+    const [headX, headY] = snake.getPosition
+
+    if (headX === appleX && headY === appleY) {
+      console.log('collision')
+      return true
+    }
+
+    return false
+  }
+
+  useEffect(() => {
     let timer = -1
 
     timer = setInterval(() => {
       if (!isGameRun) return
 
-      snake.move(grid.getSize)
-
-      const isEated = apple.checkCollision(snake.getHeadPosition)
+      snake.move()
+      const isEated = checkCollisionSnakeAndApple()
 
       if (isEated) {
         snake.updateBodySize()
         setGamePoint((curr) => ++curr)
 
-        apple.setNewPosition(snake, grid.getSize)
+        const newApple = new Apple(createNewApple())
+        setApple(newApple)
       }
 
       setGameGrid(updateGameGrid)
@@ -57,9 +70,7 @@ export const useGame = () => {
       document.removeEventListener('keyup', handleSetDirection)
       clearInterval(timer)
     }
-  }
-
-  useEffect(gameLoop, [apple, gameSpeed, grid.getSize, isGameRun, snake, updateGameGrid])
+  }, [apple, gameSpeed, grid.getSize, isGameRun, snake, updateGameGrid])
 
   const gridCells = grid.getCells
 

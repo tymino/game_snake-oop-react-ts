@@ -77,7 +77,7 @@ export class Snake extends Block {
     }
   }
 
-  move([width, height]: number[]) {
+  move() {
     const newBodySegmentPosX = this.x
     const newBodySegmentPosY = this.y
 
@@ -87,16 +87,16 @@ export class Snake extends Block {
     this.checkCollisionBody()
 
     if (this.x < 0) {
-      this.x = width - 1
+      this.x = ESizeGridAndCell.GridDimension - 1
     }
-    if (this.x >= width) {
+    if (this.x >= ESizeGridAndCell.GridDimension) {
       this.x = 0
     }
 
     if (this.y < 0) {
-      this.y = height - 1
+      this.y = ESizeGridAndCell.GridDimension - 1
     }
-    if (this.y >= height) {
+    if (this.y >= ESizeGridAndCell.GridDimension) {
       this.y = 0
     }
 
