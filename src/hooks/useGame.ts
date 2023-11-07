@@ -45,6 +45,6 @@ export const useGame = () => {
   }, [game])
 
   return {
-    gridCells: game.gridCells,
+    gridCells: game.allCells,
   }
 }

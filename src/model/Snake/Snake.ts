@@ -21,11 +21,11 @@ export class Snake extends Block {
     console.log('create Snake')
   }
 
-  get getHeadPosition() {
-    return [this.x, this.y]
+  get headPosition() {
+    return this.getPosition
   }
 
-  get getBody() {
+  get bodyPositions() {
     return this.body
   }
 

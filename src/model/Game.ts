@@ -13,26 +13,28 @@ export class Game {
   private isGamePause = false
   private snakeDirection = EDirection.RIGHT as string
 
+  private grid: Grid
   private snake: Snake
   private apple: Apple
-  private grid: Grid
 
   constructor() {
     this.grid = new Grid(this.gameWidth, this.gameHeight)
     this.snake = new Snake()
-    this.apple = new Apple(this.createNewApple())
-
-    this.grid.initGrid({
-      snake: {
-        head: this.snake.getPosition,
-        body: this.snake.getBody,
-      },
-      apple: this.apple.getPosition,
+    this.grid.initSnake({
+      head: this.snake.getPosition,
+      body: this.snake.bodyPositions,
     })
+
+    this.apple = new Apple(this.findEmptyCell())
+    this.grid.initApple(this.apple.getPosition)
   }
 
-  get gridCells() {
-    return this.grid.getCells
+  get allCells() {
+    return this.grid.allCells
+  }
+
+  get emptyCells() {
+    return this.grid.emptyCells
   }
 
   setGamePause(state: boolean) {
@@ -43,13 +45,11 @@ export class Game {
     this.snakeDirection = key
   }
 
-  createNewApple() {
-    const appleX = randomInt(this.gameWidth)
-    const appleY = randomInt(this.gameHeight)
+  findEmptyCell() {
+    const length = this.grid.emptyCells.length
+    const value = randomInt(length)
 
-    console.log('Game apple', appleX, appleY)
-
-    return [appleX, appleY]
+    return this.grid.emptyCells[value]
   }
 
   tick() {}

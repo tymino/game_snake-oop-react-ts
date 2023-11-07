@@ -8,12 +8,14 @@ export class Cell {
     public x: number,
     public y: number,
     public colorBackground: EColors,
-    public colorBorder: EColors.CELL_BORDER
+    public colorBorder: EColors.CELL_BORDER,
+    public isEmpty: boolean
   ) {
     this.id = getNewID.next().value as number
     this.x = x
     this.y = y
     this.colorBackground = colorBackground
     this.colorBorder = colorBorder
+    this.isEmpty = isEmpty
   }
 }
