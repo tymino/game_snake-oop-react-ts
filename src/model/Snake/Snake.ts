@@ -17,6 +17,8 @@ export class Snake extends Block {
     this.dy = 0
 
     this.createBody()
+
+    console.log('create Snake')
   }
 
   get getHeadPosition() {

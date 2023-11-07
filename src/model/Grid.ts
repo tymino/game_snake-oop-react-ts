@@ -1,37 +1,46 @@
-import { Apple } from './Apple'
 import { Cell } from './Cell'
-import { Snake } from './Snake/Snake'
-import { EColors, ESizeGridAndCell } from './enums'
+import { Body } from './Snake/Body'
+import { EColors } from './enums'
+
+interface IInitSnake {
+  head: number[]
+  body: Body[]
+}
+
+interface IInitGridProps {
+  snake: IInitSnake
+  apple: number[]
+}
 
 export class Grid {
-  private WIDTH = Number(ESizeGridAndCell.GridDimension)
-  private HEIGHT = Number(ESizeGridAndCell.GridDimension)
+  private widht: number
+  private height: number
   private cells: Cell[][] = []
-  private snake: Snake
-  private apple: Apple
 
-  constructor(snake: Snake, apple: Apple) {
-    this.snake = snake
-    this.apple = apple
-
-    this.initCells()
-    this.initSnake()
-    this.initApple()
+  constructor(widht: number, height: number) {
+    this.widht = widht
+    this.height = height
   }
 
   get getSize() {
-    return [this.WIDTH, this.HEIGHT]
+    return [this.widht, this.height]
   }
 
   get getCells() {
     return this.cells
   }
 
-  initCells() {
-    for (let i = 0; i < this.WIDTH; i++) {
+  initGrid({ snake, apple }: IInitGridProps) {
+    this.initCells()
+    this.initSnake(snake)
+    this.initApple(apple)
+  }
+
+  private initCells() {
+    for (let i = 0; i < this.widht; i++) {
       const row: Cell[] = []
 
-      for (let j = 0; j < this.HEIGHT; j++) {
+      for (let j = 0; j < this.height; j++) {
         row.push(new Cell(i, j, EColors.CELL_BACKGROUND, EColors.CELL_BORDER))
       }
 
@@ -39,9 +48,8 @@ export class Grid {
     }
   }
 
-  initSnake() {
-    const [headX, headY] = this.snake.getPosition
-    const body = this.snake.getBody
+  initSnake({ head, body }: IInitSnake) {
+    const [headX, headY] = head
 
     // init Head segment
     this.cells[headY][headX] = new Cell(headX, headY, EColors.SNAKE_HEAD, EColors.CELL_BORDER)
@@ -54,9 +62,7 @@ export class Grid {
     }
   }
 
-  initApple() {
-    const [x, y] = this.apple.getPosition
-
+  initApple([x, y]: number[]) {
     this.cells[x][y] = new Cell(x, y, EColors.APPLE, EColors.CELL_BORDER)
   }
 }

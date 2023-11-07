@@ -1,67 +1,39 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Grid } from '../model/Grid'
-import { Snake } from '../model/Snake/Snake'
-import { Apple } from '../model/Apple'
-import { ESizeGridAndCell } from '../model/enums'
-import { randomInt } from '../utils/randomInt'
+import { useState, useEffect } from 'react'
+import { Game } from '../model/Game'
+
+/*
+Создать класс Game
+- знает о поле, змейке, еде
+- каждый интервал useGame вызывать метод tick
+  класса Game, который просчитываут поле
+- класс Game возвращает только просчитанное поле
+  для обновления useState и ререндера
+
+
+*/
 
 export const useGame = () => {
-  const [gameSpeed] = useState(200)
-  const [gamePoint] = useState(0)
-  const [isGameRun, setIsGameRun] = useState(true)
-  const [snake] = useState(new Snake())
+  const [game] = useState(() => new Game())
 
-  const createNewApple = () => {
-    const appleX = randomInt(ESizeGridAndCell.GridDimension)
-    const appleY = randomInt(ESizeGridAndCell.GridDimension)
+  // const [apple, setApple] = useState(() => new Apple(createNewApple()))
+  // const [apple, setApple] = useState(() => {
+  //   console.log('tick')
+  //   return new Apple(createNewApple())
+  // })
 
-    console.log('apple', appleX, appleY)
+  // const updateGameGrid = useCallback(() => new Grid(snake, apple), [snake, apple])
 
-    return [appleX, appleY]
-  }
-
-  const [apple, setApple] = useState(() => {
-    console.log('tick')
-    return new Apple(createNewApple())
-  })
-  const updateGameGrid = useCallback(() => new Grid(snake, apple), [snake, apple])
-
-  const [grid, setGameGrid] = useState(updateGameGrid)
-
-  const checkCollisionSnakeAndApple = () => {
-    const [appleX, appleY] = apple.getPosition
-    const [headX, headY] = snake.getPosition
-
-    if (headX === appleX && headY === appleY) {
-      console.log('collision')
-      return true
-    }
-
-    return false
-  }
+  // const [grid, setGameGrid] = useState(updateGameGrid)
 
   useEffect(() => {
     let timer = -1
 
     timer = setInterval(() => {
-      if (!isGameRun) return
+      // if (!isGameRun) return
+    }, 200)
 
-      snake.move()
-      const isEated = checkCollisionSnakeAndApple()
-
-      if (isEated) {
-        snake.updateBodySize()
-        setGamePoint((curr) => ++curr)
-
-        const newApple = new Apple(createNewApple())
-        setApple(newApple)
-      }
-
-      setGameGrid(updateGameGrid)
-    }, gameSpeed)
-
-    const handleSetDirection = (e: KeyboardEvent) => {
-      snake.setDirection(e.key)
+    const handleSetDirection = ({ key }: KeyboardEvent) => {
+      game.setDirection(key)
     }
 
     document.addEventListener('keyup', handleSetDirection)
@@ -70,13 +42,9 @@ export const useGame = () => {
       document.removeEventListener('keyup', handleSetDirection)
       clearInterval(timer)
     }
-  }, [apple, gameSpeed, grid.getSize, isGameRun, snake, updateGameGrid])
-
-  const gridCells = grid.getCells
+  }, [game])
 
   return {
-    gridCells,
-    gamePoint,
-    setIsGameRun,
+    gridCells: game.gridCells,
   }
 }
