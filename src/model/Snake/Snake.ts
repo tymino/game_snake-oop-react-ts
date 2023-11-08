@@ -17,16 +17,17 @@ export class Snake extends Block {
     this.dy = 0
 
     this.createBody()
-
-    console.log('create Snake')
-  }
-
-  get headPosition() {
-    return this.getPosition
   }
 
   get bodyPositions() {
     return this.body
+  }
+  
+  get snakePosition() {
+    return {
+      head: this.getPosition,
+      body: this.bodyPositions,
+    }
   }
 
   updateBodySize() {

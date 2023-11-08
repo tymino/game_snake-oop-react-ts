@@ -2,16 +2,15 @@ import { randomInt } from '../utils/randomInt'
 import { Apple } from './Apple'
 import { Grid } from './Grid'
 import { Snake } from './Snake/Snake'
-import { ESizeGridAndCell, EDirection } from './enums'
+import { ESizeGridAndCell } from './enums'
 
 export class Game {
   private gameWidth = ESizeGridAndCell.GridDimension
   private gameHeight = ESizeGridAndCell.GridDimension
 
-  private gameSpeed = 200
+  private gameSpeed = 100
   private gamePoint = 0
   private isGamePause = false
-  private snakeDirection = EDirection.RIGHT as string
 
   private grid: Grid
   private snake: Snake
@@ -20,12 +19,9 @@ export class Game {
   constructor() {
     this.grid = new Grid(this.gameWidth, this.gameHeight)
     this.snake = new Snake()
-    this.grid.initSnake({
-      head: this.snake.getPosition,
-      body: this.snake.bodyPositions,
-    })
+    this.grid.initSnake(this.snake.snakePosition)
 
-    this.apple = new Apple(this.findEmptyCell())
+    this.apple = new Apple(this.findRandomEmptyCell())
     this.grid.initApple(this.apple.getPosition)
   }
 
@@ -37,20 +33,50 @@ export class Game {
     return this.grid.emptyCells
   }
 
+  get speed() {
+    return this.gameSpeed
+  }
+
+  get point() {
+    return this.gamePoint
+  }
+
+  get pause() {
+    return this.isGamePause
+  }
+
   setGamePause(state: boolean) {
     this.isGamePause = state
   }
 
-  setDirection(key: string) {
-    this.snakeDirection = key
+  setSnakeDirection(key: string) {
+    this.snake.setDirection(key)
   }
 
-  findEmptyCell() {
+  findRandomEmptyCell() {
     const length = this.grid.emptyCells.length
     const value = randomInt(length)
 
     return this.grid.emptyCells[value]
   }
 
-  tick() {}
+  tick() {
+    this.snake.move()
+    this.checkCollisionWithApple()
+    this.grid.updateCells(this.snake.snakePosition, this.apple.getPosition)
+
+    return this.grid.allCells
+  }
+
+  checkCollisionWithApple() {
+    const [headX, headY] = this.snake.getPosition
+    const [appleX, appleY] = this.apple.getPosition
+
+    if (headX === appleX && headY === appleY) {
+      this.apple.setNewPosition(this.findRandomEmptyCell())
+      this.snake.updateBodySize()
+
+      console.log('apple collision')
+    }
+  }
 }

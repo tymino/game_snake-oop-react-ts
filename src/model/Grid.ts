@@ -17,7 +17,7 @@ export class Grid {
     this.widht = widht
     this.height = height
 
-    this.initGrid()
+    this.initCells()
   }
 
   get size() {
@@ -32,10 +32,6 @@ export class Grid {
     return this.emptyCellsPosition
   }
 
-  initGrid() {
-    this.initCells()
-  }
-
   private initCells() {
     for (let i = 0; i < this.widht; i++) {
       const row: Cell[] = []
@@ -46,7 +42,6 @@ export class Grid {
 
       this.cells.push(row)
     }
-    console.log('create Cells')
   }
 
   initSnake({ head, body }: IInitSnake) {
@@ -78,8 +73,14 @@ export class Grid {
   }
 
   initApple([x, y]: number[]) {
-    this.cells[x][y] = new Cell(x, y, EColors.APPLE, EColors.CELL_BORDER, false)
-    this.updateEmptyCells()
+    this.cells[y][x] = new Cell(x, y, EColors.APPLE, EColors.CELL_BORDER, false)
+  }
+
+  updateCells(snakePosition: IInitSnake, applePosition: number[]) {
+    this.cells = []
+    this.initCells()
+    this.initSnake(snakePosition)
+    this.initApple(applePosition)
   }
 
   updateEmptyCells() {

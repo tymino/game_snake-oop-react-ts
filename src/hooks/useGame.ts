@@ -14,6 +14,7 @@ import { Game } from '../model/Game'
 
 export const useGame = () => {
   const [game] = useState(() => new Game())
+  const [gridCells, setGridCells] = useState(game.allCells)
 
   // const [apple, setApple] = useState(() => new Apple(createNewApple()))
   // const [apple, setApple] = useState(() => {
@@ -29,11 +30,14 @@ export const useGame = () => {
     let timer = -1
 
     timer = setInterval(() => {
-      // if (!isGameRun) return
-    }, 200)
+      if (game.pause) return
+
+      const updatedCells = game.tick()
+      setGridCells(updatedCells)
+    }, game.speed)
 
     const handleSetDirection = ({ key }: KeyboardEvent) => {
-      game.setDirection(key)
+      game.setSnakeDirection(key)
     }
 
     document.addEventListener('keyup', handleSetDirection)
@@ -45,6 +49,6 @@ export const useGame = () => {
   }, [game])
 
   return {
-    gridCells: game.allCells,
+    gridCells,
   }
 }
