@@ -73,8 +73,9 @@ export class Game {
     const [appleX, appleY] = this.apple.getPosition
 
     if (headX === appleX && headY === appleY) {
-      this.apple.setNewPosition(this.findRandomEmptyCell())
       this.snake.updateBodySize()
+      this.apple.setNewPosition(this.findRandomEmptyCell())
+      this.gamePoint++
 
       console.log('apple collision')
     }
