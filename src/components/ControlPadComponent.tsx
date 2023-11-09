@@ -1,7 +1,7 @@
 import styled from 'styled-components'
+import { EColors, EDirection } from '../model/enums'
 import { ButtonComponent } from './ButtonComponent'
-import { EColors } from '../model/enums'
-import { useState } from 'react'
+import { useControl } from '../hooks/useControl'
 
 const ControlContainer = styled.div`
   position: relative;
@@ -41,11 +41,12 @@ const ControlButton = styled.button`
   font-size: 40px;
 `
 
-export const ControlPadComponent = () => {
-  const [isOpenControl, setIsOpenControl] = useState(false)
+interface IProps {
+  padControl: (key: string) => void
+}
 
-  const handleOpen = () => setIsOpenControl(true)
-  const handleClose = () => setIsOpenControl(false)
+export const ControlPadComponent = ({ padControl }: IProps) => {
+  const { isOpenControl, handleOpen, handleClose, handleControl } = useControl(padControl)
 
   if (isOpenControl) {
     return (
@@ -55,13 +56,13 @@ export const ControlPadComponent = () => {
         </ButtonWrapper>
 
         <ControlEmptyBlock />
-        <ControlButton>&uarr;</ControlButton>
+        <ControlButton onClick={() => handleControl(EDirection.UP)}>&uarr;</ControlButton>
         <ControlEmptyBlock />
-        <ControlButton>&larr;</ControlButton>
+        <ControlButton onClick={() => handleControl(EDirection.LEFT)}>&larr;</ControlButton>
         <ControlEmptyBlock />
-        <ControlButton>&rarr;</ControlButton>
+        <ControlButton onClick={() => handleControl(EDirection.RIGHT)}>&rarr;</ControlButton>
         <ControlEmptyBlock />
-        <ControlButton>&darr;</ControlButton>
+        <ControlButton onClick={() => handleControl(EDirection.DOWN)}>&darr;</ControlButton>
         <ControlEmptyBlock />
       </ControlContainer>
     )

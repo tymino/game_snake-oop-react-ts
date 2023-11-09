@@ -9,6 +9,10 @@ export const useGame = () => {
     game.toggleGamePause()
   }
 
+  const padControl = (key: string) => {
+    game.setSnakeDirection(key)
+  }
+
   useEffect(() => {
     let timer = -1
 
@@ -22,7 +26,6 @@ export const useGame = () => {
     const handleSetDirection = ({ key }: KeyboardEvent) => {
       game.setSnakeDirection(key)
     }
-
     document.addEventListener('keydown', handleSetDirection)
 
     return () => {
@@ -35,5 +38,6 @@ export const useGame = () => {
     gridCells,
     points: game.point,
     togglePause,
+    padControl,
   }
 }

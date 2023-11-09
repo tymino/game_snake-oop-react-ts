@@ -29,7 +29,7 @@ const PointsContainer = styled.div`
 `
 
 export const GameComponent = () => {
-  const { gridCells, points, togglePause } = useGame()
+  const { gridCells, points, togglePause, padControl } = useGame()
 
   return (
     <GameContainer>
@@ -42,7 +42,7 @@ export const GameComponent = () => {
         )}
       </BoardContainer>
       <ButtonComponent name={'stop/play game'} handleClick={togglePause} type="default" />
-      <ControlPadComponent />
+      <ControlPadComponent padControl={padControl} />
     </GameContainer>
   )
 }
