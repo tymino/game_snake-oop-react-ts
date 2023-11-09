@@ -1,7 +1,9 @@
 import styled from 'styled-components'
+import { EColors, ESizeGridAndCell } from '../model/enums'
 import { useGame } from '../hooks/useGame'
 import { CellComponent } from './CellComponent'
-import { EColors, ESizeGridAndCell } from '../model/enums'
+import { ButtonComponent } from './ButtonComponent'
+import { ControlPadComponent } from './ControlPadComponent'
 
 const GameContainer = styled.div`
   display: flex;
@@ -26,30 +28,6 @@ const PointsContainer = styled.div`
   text-transform: capitalize;
 `
 
-const ButtonStyle = styled.button`
-  margin-top: 10px;
-  padding: 10px 20px;
-
-  background: ${EColors.SNAKE_BODY};
-  border: 2px solid ${EColors.CELL_BORDER};
-  border-radius: 4px;
-  color: ${EColors.CELL_BORDER};
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-
-  transition: all ease 0.3s;
-  cursor: pointer;
-
-  &:hover {
-    background: ${EColors.CELL_BACKGROUND};
-    color: ${EColors.BACKGROUND};
-  }
-  &:active {
-    transform: translateY(2px);
-  }
-`
-
 export const GameComponent = () => {
   const { gridCells, points, togglePause } = useGame()
 
@@ -63,7 +41,8 @@ export const GameComponent = () => {
           })
         )}
       </BoardContainer>
-      <ButtonStyle onClick={togglePause}>stop/play game</ButtonStyle>
+      <ButtonComponent name={'stop/play game'} handleClick={togglePause} type="default" />
+      <ControlPadComponent />
     </GameContainer>
   )
 }
