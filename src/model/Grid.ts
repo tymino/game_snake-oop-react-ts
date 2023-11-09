@@ -55,7 +55,7 @@ export class Grid {
 
     // init Body segments
     for (let i = 0; i < body.length; i++) {
-      const [bodyX, bodyY] = body[i].getPosition
+      const [bodyX, bodyY] = body[i].position
 
       this.cells[bodyY][bodyX] = new Cell(
         bodyX,

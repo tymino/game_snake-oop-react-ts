@@ -19,14 +19,14 @@ export class Snake extends Block {
     this.createBody()
   }
 
-  get bodyPositions() {
+  get bodyPosition() {
     return this.body
   }
-  
+
   get snakePosition() {
     return {
-      head: this.getPosition,
-      body: this.bodyPositions,
+      head: this.position,
+      body: this.bodyPosition,
     }
   }
 
@@ -70,24 +70,21 @@ export class Snake extends Block {
   checkCollisionBody() {
     for (let i = 0; i < this.body.length; i++) {
       const segment = this.body[i]
-      const [segmentX, segmentY] = segment.getPosition
+      const [segmentX, segmentY] = segment.position
 
       if (segmentX === this.x && segmentY === this.y) {
-        const newBody = this.body.slice(0, i + 1)
+        this.body = this.body.slice(0, i + 1)
 
-        this.body = newBody
+        return true
       }
     }
   }
 
   move() {
-    const newBodySegmentPosX = this.x
-    const newBodySegmentPosY = this.y
+    const newSegment = new Body(this.x, this.y)
 
     this.x += this.dx
     this.y += this.dy
-
-    this.checkCollisionBody()
 
     if (this.x < 0) {
       this.x = ESizeGridAndCell.GridDimension - 1
@@ -103,11 +100,9 @@ export class Snake extends Block {
       this.y = 0
     }
 
-    this.body.unshift(new Body(newBodySegmentPosX, newBodySegmentPosY))
+    this.body.unshift(newSegment)
 
-    if (!this.isGrow) {
-      this.body.pop()
-    }
+    if (!this.isGrow) this.body.pop()
 
     this.isGrow = false
   }

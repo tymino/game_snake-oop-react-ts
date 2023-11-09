@@ -6,7 +6,7 @@ export class Block {
     this.y = y
   }
 
-  get getPosition(): TPoint2D {
+  get position(): TPoint2D {
     return [this.x, this.y]
   }
 }

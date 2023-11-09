@@ -9,6 +9,7 @@ export class Game {
 
   private gameSpeed = 100
   private gamePoint = 0
+  private gamePointPerApple = 10
   private isGamePause = false
 
   private grid: Grid
@@ -21,7 +22,7 @@ export class Game {
     this.grid.initSnake(this.snake.snakePosition)
 
     this.apple = new Apple(this.grid.findRandomEmptyCell())
-    this.grid.initApple(this.apple.getPosition)
+    this.grid.initApple(this.apple.position)
   }
 
   get allCells() {
@@ -50,22 +51,32 @@ export class Game {
 
   tick() {
     this.snake.move()
-    this.checkCollisionWithApple()
-    this.grid.updateCells(this.snake.snakePosition, this.apple.getPosition)
+    this.checkCollision()
+    this.grid.updateCells(this.snake.snakePosition, this.apple.position)
 
     return this.grid.allCells
   }
 
+  checkCollision() {
+    const isEatedBody = this.snake.checkCollisionBody()
+
+    if (isEatedBody) {
+      this.gamePoint = 0
+    }
+
+    this.checkCollisionWithApple()
+  }
+
   checkCollisionWithApple() {
-    const [headX, headY] = this.snake.getPosition
-    const [appleX, appleY] = this.apple.getPosition
+    const [headX, headY] = this.snake.position
+    const [appleX, appleY] = this.apple.position
 
     if (headX === appleX && headY === appleY) {
       this.snake.updateBodySize()
 
       const emptyCell = this.grid.findRandomEmptyCell()
       this.apple.setNewPosition(emptyCell)
-      this.gamePoint++
+      this.gamePoint += this.gamePointPerApple
     }
   }
 }
