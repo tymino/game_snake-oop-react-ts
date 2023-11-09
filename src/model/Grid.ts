@@ -2,9 +2,10 @@ import { randomInt } from '../utils/randomInt'
 import { Cell } from './Cell'
 import { Body } from './Snake/Body'
 import { EColors } from './enums'
+import { TPoint2D } from './types/TPoint2D'
 
 interface IInitSnake {
-  head: number[]
+  head: TPoint2D
   body: Body[]
 }
 
@@ -12,7 +13,6 @@ export class Grid {
   private widht: number
   private height: number
   private cells: Cell[][] = []
-  private emptyCellsPosition: number[][] = []
 
   constructor(widht: number, height: number) {
     this.widht = widht
@@ -67,11 +67,11 @@ export class Grid {
     }
   }
 
-  initApple([x, y]: number[]) {
+  initApple([x, y]: TPoint2D) {
     this.cells[y][x] = new Cell(x, y, EColors.APPLE, EColors.CELL_BORDER, false)
   }
 
-  updateCells(snakePosition: IInitSnake, applePosition: number[]) {
+  updateCells(snakePosition: IInitSnake, applePosition: TPoint2D) {
     this.cells = []
     this.initCells()
     this.initSnake(snakePosition)
@@ -79,7 +79,7 @@ export class Grid {
   }
 
   findRandomEmptyCell() {
-    const cells: number[][] = []
+    const cells: TPoint2D[] = []
 
     for (const row of this.cells) {
       for (const { x, y, isEmpty } of row) {
