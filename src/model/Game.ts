@@ -45,8 +45,8 @@ export class Game {
     return this.isGamePause
   }
 
-  setGamePause(state: boolean) {
-    this.isGamePause = state
+  toggleGamePause() {
+    this.isGamePause = !this.isGamePause
   }
 
   setSnakeDirection(key: string) {

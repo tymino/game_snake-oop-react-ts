@@ -16,14 +16,14 @@ const BoardContainer = styled.div`
   grid-template-columns: repeat(${ESizeGridAndCell.GridDimension}, 1fr);
 `
 
-// const ButtonStyle = styled.button`
-//   margin-top: 10px;
-//   padding: 10px 20px;
-//   cursor: pointer;
-// `
+const ButtonStyle = styled.button`
+  margin-top: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+`
 
 export const GameComponent = () => {
-  const { gridCells } = useGame()
+  const { gridCells, points, togglePause } = useGame()
   // console.log('GameComponent', gameGrid)
 
   // const changeRunPauseGame = () => {
@@ -32,6 +32,7 @@ export const GameComponent = () => {
 
   return (
     <GameContainer>
+      <div>{points}</div>
       <BoardContainer>
         {gridCells.map((row) =>
           row.map((cell) => {
@@ -39,8 +40,7 @@ export const GameComponent = () => {
           })
         )}
       </BoardContainer>
-      {/* <ButtonStyle onClick={changeRunPauseGame}>STOP/PLAY GAME</ButtonStyle>
-      <div>{gamePoint}</div> */}
+      <ButtonStyle onClick={togglePause}>STOP/PLAY GAME</ButtonStyle>
     </GameContainer>
   )
 }
