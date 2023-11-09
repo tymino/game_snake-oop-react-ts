@@ -1,4 +1,3 @@
-import { randomInt } from '../utils/randomInt'
 import { Apple } from './Apple'
 import { Grid } from './Grid'
 import { Snake } from './Snake/Snake'
@@ -21,16 +20,12 @@ export class Game {
     this.snake = new Snake()
     this.grid.initSnake(this.snake.snakePosition)
 
-    this.apple = new Apple(this.findRandomEmptyCell())
+    this.apple = new Apple(this.grid.findRandomEmptyCell())
     this.grid.initApple(this.apple.getPosition)
   }
 
   get allCells() {
     return this.grid.allCells
-  }
-
-  get emptyCells() {
-    return this.grid.emptyCells
   }
 
   get speed() {
@@ -53,13 +48,6 @@ export class Game {
     this.snake.setDirection(key)
   }
 
-  findRandomEmptyCell() {
-    const length = this.grid.emptyCells.length
-    const value = randomInt(length)
-
-    return this.grid.emptyCells[value]
-  }
-
   tick() {
     this.snake.move()
     this.checkCollisionWithApple()
@@ -74,10 +62,10 @@ export class Game {
 
     if (headX === appleX && headY === appleY) {
       this.snake.updateBodySize()
-      this.apple.setNewPosition(this.findRandomEmptyCell())
-      this.gamePoint++
 
-      console.log('apple collision')
+      const emptyCell = this.grid.findRandomEmptyCell()
+      this.apple.setNewPosition(emptyCell)
+      this.gamePoint++
     }
   }
 }

@@ -1,3 +1,4 @@
+import { randomInt } from '../utils/randomInt'
 import { Cell } from './Cell'
 import { Body } from './Snake/Body'
 import { EColors } from './enums'
@@ -26,10 +27,6 @@ export class Grid {
 
   get allCells() {
     return this.cells
-  }
-
-  get emptyCells() {
-    return this.emptyCellsPosition
   }
 
   private initCells() {
@@ -68,8 +65,6 @@ export class Grid {
         false
       )
     }
-
-    this.updateEmptyCells()
   }
 
   initApple([x, y]: number[]) {
@@ -83,17 +78,21 @@ export class Grid {
     this.initApple(applePosition)
   }
 
-  updateEmptyCells() {
+  findRandomEmptyCell() {
     const cells: number[][] = []
 
     for (const row of this.cells) {
       for (const { x, y, isEmpty } of row) {
         if (isEmpty) {
-          cells.push([x, y])
+          // reverse coords [x, y] -> [y, x]
+          cells.push([y, x])
         }
       }
     }
 
-    this.emptyCellsPosition = cells
+    const length = cells.length
+    const index = randomInt(length)
+
+    return cells[index]
   }
 }
