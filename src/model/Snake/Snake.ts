@@ -7,6 +7,7 @@ export class Snake extends Block {
   private dy: number
   private isGrow = false
   private body: Body[] = []
+  private isKeyPress = false
 
   constructor(
     x = Math.floor(ESizeGridAndCell.GridDimension / 2),
@@ -17,6 +18,8 @@ export class Snake extends Block {
     this.dy = 0
 
     this.createBody()
+
+    document.addEventListener('keydown', this.handleSetDirection)
   }
 
   get bodyPosition() {
@@ -28,6 +31,12 @@ export class Snake extends Block {
       head: this.position,
       body: this.bodyPosition,
     }
+  }
+
+  handleSetDirection = ({ key }: KeyboardEvent) => {
+    if (this.isKeyPress) return
+    this.isKeyPress = true
+    this.setDirection(key)
   }
 
   updateBodySize() {
@@ -73,7 +82,7 @@ export class Snake extends Block {
       const [segmentX, segmentY] = segment.position
 
       if (segmentX === this.x && segmentY === this.y) {
-        this.body = this.body.slice(0, i + 1)
+        this.body = this.body.slice(0, i)
 
         return true
       }

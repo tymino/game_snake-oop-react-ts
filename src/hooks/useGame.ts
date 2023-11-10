@@ -9,7 +9,7 @@ export const useGame = () => {
     game.toggleGamePause()
   }
 
-  const padControl = (key: string) => {
+  const handlePadControl = (key: string) => {
     game.setSnakeDirection(key)
   }
 
@@ -23,13 +23,7 @@ export const useGame = () => {
       setGridCells(updatedCells)
     }, game.speed)
 
-    const handleSetDirection = ({ key }: KeyboardEvent) => {
-      game.setSnakeDirection(key)
-    }
-    document.addEventListener('keydown', handleSetDirection)
-
     return () => {
-      document.removeEventListener('keydown', handleSetDirection)
       clearInterval(timer)
     }
   }, [game])
@@ -38,6 +32,6 @@ export const useGame = () => {
     gridCells,
     points: game.point,
     togglePause,
-    padControl,
+    padControl: handlePadControl,
   }
 }
