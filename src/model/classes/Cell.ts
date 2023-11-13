@@ -19,3 +19,5 @@ export class Cell {
     this.isEmpty = isEmpty
   }
 }
+
+export type TCell = Cell

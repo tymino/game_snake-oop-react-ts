@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Cell } from '../model/Cell'
+import { TCell } from '../model/classes/Cell'
 import { EColors } from '../model/enums/EColors'
 import { ESizeGridAndCell } from '../model/enums/ESizeGridAndCell'
 
@@ -16,7 +16,7 @@ const CellStyle = styled.div<ICellStyleProps>`
 `
 
 interface IProps {
-  cell: Cell
+  cell: TCell
 }
 
 export const CellComponent = ({ cell }: IProps) => {
