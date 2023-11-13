@@ -6,9 +6,11 @@ import { ESizeGridAndCell } from './enums'
 export class Game {
   private gameWidth = ESizeGridAndCell.GridDimension
   private gameHeight = ESizeGridAndCell.GridDimension
+  private localStorageKey = 'snake-game'
 
   private gameSpeed = 100
   private gamePoint = 0
+  private gameRecord = 0
   private gamePointPerApple = 10
   private isGamePause = false
 
@@ -23,6 +25,8 @@ export class Game {
 
     this.apple = new Apple(this.grid.findRandomEmptyCell())
     this.grid.initApple(this.apple.position)
+
+    this.initGameRecord()
   }
 
   get allCells() {
@@ -37,16 +41,12 @@ export class Game {
     return this.gamePoint
   }
 
+  get record() {
+    return this.gameRecord
+  }
+
   get pause() {
     return this.isGamePause
-  }
-
-  toggleGamePause() {
-    this.isGamePause = !this.isGamePause
-  }
-
-  setSnakeDirection(key: string) {
-    this.snake.setDirection(key)
   }
 
   tick() {
@@ -57,10 +57,15 @@ export class Game {
     return this.grid.allCells
   }
 
+  setSnakeDirection(key: string) {
+    this.snake.setDirection(key)
+  }
+
   checkCollision() {
     const isEatedBody = this.snake.checkCollisionBody()
 
     if (isEatedBody) {
+      this.saveRecord()
       this.gamePoint = 0
     }
 
@@ -77,6 +82,21 @@ export class Game {
       const emptyCell = this.grid.findRandomEmptyCell()
       this.apple.setNewPosition(emptyCell)
       this.gamePoint += this.gamePointPerApple
+    }
+  }
+
+  toggleGamePause() {
+    this.isGamePause = !this.isGamePause
+  }
+
+  initGameRecord() {
+    this.gameRecord = Number(localStorage.getItem(this.localStorageKey))
+  }
+
+  saveRecord() {
+    if (this.gameRecord < this.gamePoint) {
+      this.gameRecord = this.point
+      localStorage.setItem(this.localStorageKey, JSON.stringify(this.point))
     }
   }
 }

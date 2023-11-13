@@ -20,6 +20,11 @@ const BoardContainer = styled.div`
   border: 2px solid ${EColors.CELL_BORDER};
 `
 
+const PointWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+`
 const PointsContainer = styled.div`
   align-self: flex-end;
   margin-bottom: 6px;
@@ -29,11 +34,14 @@ const PointsContainer = styled.div`
 `
 
 export const GameComponent = () => {
-  const { gridCells, points, togglePause, padControl } = useGame()
+  const { gridCells, points, record, togglePause, handlePadControl: padControl } = useGame()
 
   return (
     <GameContainer>
-      <PointsContainer>points: {points}</PointsContainer>
+      <PointWrapper>
+        <PointsContainer>points: {points}</PointsContainer>
+        <PointsContainer>record: {record}</PointsContainer>
+      </PointWrapper>
       <BoardContainer>
         {gridCells.map((row) =>
           row.map((cell) => {

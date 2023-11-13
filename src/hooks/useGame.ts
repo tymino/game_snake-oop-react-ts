@@ -31,7 +31,8 @@ export const useGame = () => {
   return {
     gridCells,
     points: game.point,
+    record: game.record,
     togglePause,
-    padControl: handlePadControl,
+    handlePadControl,
   }
 }
