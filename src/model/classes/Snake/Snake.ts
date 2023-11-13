@@ -1,6 +1,6 @@
 import { Block } from '../Block'
 import { Body } from './Body'
-import { EDirection, ESizeGridAndCell } from '../enums'
+import { EDirection, ESizeGridAndCell } from '../../enums'
 
 export class Snake extends Block {
   private dx: number

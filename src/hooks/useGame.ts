@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Game } from '../model/Game'
+import { Game } from '../model/classes/Game'
 
 export const useGame = () => {
   const [game] = useState(() => new Game())

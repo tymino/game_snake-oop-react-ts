@@ -1,5 +1,5 @@
-import { EColors } from './enums/EColors'
-import { getNewID } from '../utils/getId'
+import { EColors } from '../enums/EColors'
+import { getNewID } from '../../utils/getId'
 
 export class Cell {
   id: number

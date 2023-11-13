@@ -1,8 +1,8 @@
-import { randomInt } from '../utils/randomInt'
+import { randomInt } from '../../utils/randomInt'
 import { Cell } from './Cell'
 import { Body } from './Snake/Body'
-import { EColors } from './enums'
-import { TPoint2D } from './types/TPoint2D'
+import { EColors } from '../enums'
+import { TPoint2D } from '../types/TPoint2D'
 
 interface IInitSnake {
   head: TPoint2D

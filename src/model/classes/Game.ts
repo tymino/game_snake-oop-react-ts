@@ -1,7 +1,7 @@
 import { Apple } from './Apple'
 import { Grid } from './Grid'
 import { Snake } from './Snake/Snake'
-import { ESizeGridAndCell } from './enums'
+import { ESizeGridAndCell } from '../enums'
 
 export class Game {
   private gameWidth = ESizeGridAndCell.GridDimension
