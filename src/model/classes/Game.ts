@@ -6,7 +6,7 @@ import { ESizeGridAndCell } from '../enums'
 export class Game {
   private gameWidth = ESizeGridAndCell.GridDimension
   private gameHeight = ESizeGridAndCell.GridDimension
-  private localStorageKey = 'snake-game'
+  private readonly localStorageKey = 'snake-game'
 
   private gameSpeed = 100
   private gamePoint = 0

@@ -10,18 +10,16 @@ interface IInitSnake {
 }
 
 export class Grid {
-  private widht: number
-  private height: number
   private cells: Cell[][] = []
 
-  constructor(widht: number, height: number) {
+  constructor(private widht: number, private height: number) {
     this.widht = widht
     this.height = height
 
     this.initCells()
   }
 
-  get size() {
+  get size(): TPoint2D {
     return [this.widht, this.height]
   }
 

@@ -7,8 +7,6 @@ export class Snake extends Block {
   private dy: number
   private isGrow = false
   private body: Body[] = []
-  keyPressed = ''
-  test = false
 
   constructor(
     x = Math.floor(ESizeGridAndCell.GridDimension / 2),

@@ -3,7 +3,11 @@ function* getId() {
 
   while (true) {
     yield count++
+
+    if (count > 10000) count = 0
   }
 }
 
-export const getNewID = getId()
+const getNewID = getId()
+
+export const getNewId = () => getNewID.next().value as number

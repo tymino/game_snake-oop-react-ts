@@ -1,8 +1,8 @@
 import { EColors } from '../enums/EColors'
-import { getNewID } from '../../utils/getId'
+import { getNewId } from '../../utils/getId'
 
 export class Cell {
-  id: number
+  public readonly id: number
 
   constructor(
     public x: number,
@@ -11,7 +11,7 @@ export class Cell {
     public colorBorder: EColors.CELL_BORDER,
     public isEmpty: boolean
   ) {
-    this.id = getNewID.next().value as number
+    this.id = getNewId()
     this.x = x
     this.y = y
     this.colorBackground = colorBackground
